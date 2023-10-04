@@ -1,0 +1,37 @@
+version: '3.8'
+
+networks:
+  sqlserver-net:
+    name: sqlserver-net
+
+volumes:
+  sqlserver-vol: {}
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest  # Use the SQL Server image
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${SA_PASSWORD:?Variable not set}  # Replace with a strong SA password
+      - MSSQL_PID=Developer  # Specify the SQL Server edition (e.g., Developer)
+      - MSSQL_TCP_PORT=${DB_PORT:?Variable not set}  # Specify the SQL Server port
+    networks:
+      - sqlserver-net
+    ports:
+      - ${DB_PORT:-1433}:1433  # Map the container's SQL Server port to the host machine's port
+    restart: unless-stopped
+    volumes:
+      - sqlserver-vol:/var/opt/mssql  # Mount the volume for data persistence
+
+  adminer:
+    image: adminer:latest
+    depends_on:
+      - sqlserver
+    environment:
+      - ADMINER_DEFAULT_SERVER=sqlserver  # Connect Adminer to SQL Server
+      - ADMINER_DESIGN=flat
+    ports:
+      - ${ADMINER_PORT:-8080}:8080
+    networks:
+      - sqlserver-net
+    restart: unless-stopped
