@@ -11,3 +11,8 @@
 
 ## lower case with underscore, dash
 - user for: page name, config file name
+
+## branh name
+- fix/ten-nhanh
+- feature/ten-feature
+- refactor/ten-refator
