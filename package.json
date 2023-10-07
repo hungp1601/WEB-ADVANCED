@@ -1,0 +1,27 @@
+{
+  "name": "btl-web",
+  "version": "1.0.0",
+  "description": "- install docker\r - ```docker-compose up```\r - go to localhost:ADMINER_PORT \r - login with username: 'sa' and password: 'SA_PASSWORD'",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "css:build": "npx tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/styles.css --minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hungp1601/WEB-ADVANCED.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hungp1601/WEB-ADVANCED/issues"
+  },
+  "homepage": "https://github.com/hungp1601/WEB-ADVANCED#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  }
+}
