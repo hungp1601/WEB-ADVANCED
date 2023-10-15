@@ -6,11 +6,8 @@ namespace btl_web.Models;
 
 public partial class BtlWebContext : DbContext
 {
-    //private readonly IConfiguration _config;
-
     public BtlWebContext()
     {
-        //_config = configuration;
     }
 
     public BtlWebContext(DbContextOptions<BtlWebContext> options)
@@ -38,15 +35,8 @@ public partial class BtlWebContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            //base.OnConfiguring(optionsBuilder);
-            //optionsBuilder.UseSqlServer(_config["ConnectionStrings:DATABASE_CONNECTION_STRING"]);
-        }
 
     }
-    //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-    //=> optionsBuilder.UseSqlServer("Server=DESKTOP-6K173E6\\DB_WEB;Database=btl_web;Trusted_Connection=True;encrypt=false;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -54,27 +44,27 @@ public partial class BtlWebContext : DbContext
         {
             entity.ToTable("assign");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
                 .HasColumnType("ntext")
                 .HasColumnName("description");
             entity.Property(e => e.DueDate)
                 .HasColumnType("datetime")
                 .HasColumnName("due_date");
+            entity.Property(e => e.IsHidden)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("is_hidden");
             entity.Property(e => e.LessonId).HasColumnName("lesson_id");
             entity.Property(e => e.Name)
-                .HasMaxLength(1)
-                .IsUnicode(false)
+                .HasColumnType("ntext")
                 .HasColumnName("name");
-            entity.Property(e => e.StartDate).HasColumnName("start_date");
+            entity.Property(e => e.StartDate)
+                .HasColumnType("datetime")
+                .HasColumnName("start_date");
             entity.Property(e => e.Url)
-                .HasMaxLength(1)
-                .IsUnicode(false)
+                .HasColumnType("text")
                 .HasColumnName("url");
             entity.Property(e => e.UserId).HasColumnName("user_id");
-            entity.Property(e => e.Visible).HasColumnName("visible");
 
             entity.HasOne(d => d.Lesson).WithMany(p => p.Assigns)
                 .HasForeignKey(d => d.LessonId)
@@ -91,9 +81,7 @@ public partial class BtlWebContext : DbContext
         {
             entity.ToTable("attendance");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AttendanceTime)
                 .HasColumnType("datetime")
                 .HasColumnName("attendance_time");
@@ -102,8 +90,7 @@ public partial class BtlWebContext : DbContext
                 .HasColumnName("due_time");
             entity.Property(e => e.LessonId).HasColumnName("lesson_id");
             entity.Property(e => e.Status)
-                .HasMaxLength(1)
-                .IsUnicode(false)
+                .HasColumnType("text")
                 .HasColumnName("status");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
@@ -122,27 +109,26 @@ public partial class BtlWebContext : DbContext
         {
             entity.ToTable("course");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
                 .HasColumnType("ntext")
                 .HasColumnName("description");
             entity.Property(e => e.EndDate)
                 .HasColumnType("datetime")
                 .HasColumnName("end_date");
+            entity.Property(e => e.IsHidden)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("is_hidden");
             entity.Property(e => e.Name)
-                .HasMaxLength(1)
+                .HasColumnType("ntext")
                 .HasColumnName("name");
             entity.Property(e => e.StartDate)
                 .HasColumnType("datetime")
                 .HasColumnName("start_date");
             entity.Property(e => e.TeacherId).HasColumnName("teacher_id");
-            entity.Property(e => e.Visible).HasColumnName("visible");
 
             entity.HasOne(d => d.Teacher).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.TeacherId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_course_teacher_id");
         });
 
@@ -150,14 +136,12 @@ public partial class BtlWebContext : DbContext
         {
             entity.ToTable("course_category");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
                 .HasColumnType("ntext")
                 .HasColumnName("description");
             entity.Property(e => e.Name)
-                .HasMaxLength(1)
+                .HasColumnType("ntext")
                 .HasColumnName("name");
         });
 
@@ -165,9 +149,7 @@ public partial class BtlWebContext : DbContext
         {
             entity.ToTable("course_has_categories");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CategorieId).HasColumnName("categorie_id");
             entity.Property(e => e.CourseId).HasColumnName("course_id");
 
@@ -186,17 +168,17 @@ public partial class BtlWebContext : DbContext
         {
             entity.ToTable("lesson");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CourseId).HasColumnName("course_id");
             entity.Property(e => e.Description)
                 .HasColumnType("ntext")
                 .HasColumnName("description");
+            entity.Property(e => e.IsHidden)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("is_hidden");
             entity.Property(e => e.Name)
-                .HasMaxLength(1)
+                .HasColumnType("ntext")
                 .HasColumnName("name");
-            entity.Property(e => e.Visible).HasColumnName("visible");
 
             entity.HasOne(d => d.Course).WithMany(p => p.Lessons)
                 .HasForeignKey(d => d.CourseId)
@@ -208,14 +190,12 @@ public partial class BtlWebContext : DbContext
         {
             entity.ToTable("role");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
                 .HasColumnType("ntext")
                 .HasColumnName("description");
             entity.Property(e => e.Name)
-                .HasMaxLength(1)
+                .HasColumnType("ntext")
                 .HasColumnName("name");
         });
 
@@ -223,27 +203,22 @@ public partial class BtlWebContext : DbContext
         {
             entity.ToTable("user");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
                 .HasColumnType("ntext")
                 .HasColumnName("description");
             entity.Property(e => e.Email)
-                .HasMaxLength(1)
-                .IsUnicode(false)
+                .HasColumnType("text")
                 .HasColumnName("email");
             entity.Property(e => e.FullName)
-                .HasMaxLength(1)
+                .HasColumnType("ntext")
                 .HasColumnName("full_name");
             entity.Property(e => e.Password)
-                .HasMaxLength(1)
-                .IsUnicode(false)
+                .HasColumnType("text")
                 .HasColumnName("password");
             entity.Property(e => e.RoleId).HasColumnName("role_id");
             entity.Property(e => e.Status)
-                .HasMaxLength(1)
-                .IsUnicode(false)
+                .HasColumnType("text")
                 .HasColumnName("status");
 
             entity.HasOne(d => d.Role).WithMany(p => p.Users)
@@ -256,9 +231,7 @@ public partial class BtlWebContext : DbContext
         {
             entity.ToTable("user_has_course");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CourseId).HasColumnName("course_id");
             entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.UserId).HasColumnName("user_id");

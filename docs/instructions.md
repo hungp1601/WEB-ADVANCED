@@ -3,6 +3,7 @@
 # 2, Install the below nugget packages
 -      1,  Microsoft.EntityFrameworkCore
 -      2,  Microsoft.EntityFrameworkCore.Sqlserver 
+-      3,  Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
 -      3,  Microsoft.EntityFrameworkCore.Tools
 -      4,  Microsoft.Extension.configuration
 

@@ -9,7 +9,7 @@ public partial class CourseCategory
 
     public string Name { get; set; } = null!;
 
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; }
 
     public virtual ICollection<CourseHasCategory> CourseHasCategories { get; set; } = new List<CourseHasCategory>();
 }

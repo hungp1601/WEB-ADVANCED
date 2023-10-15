@@ -18,7 +18,6 @@ namespace btl_web.Controllers
 
         public IActionResult Index()
         {
-            var test = btlWebContext.Users.ToList();
             return View();
         }
 

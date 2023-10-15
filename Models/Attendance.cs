@@ -11,7 +11,7 @@ public partial class Attendance
 
     public int UserId { get; set; }
 
-    public string Status { get; set; } = null!;
+    public string? Status { get; set; }
 
     public DateTime AttendanceTime { get; set; }
 

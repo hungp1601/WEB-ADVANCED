@@ -11,9 +11,9 @@ public partial class Lesson
 
     public string Name { get; set; } = null!;
 
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; }
 
-    public bool Visible { get; set; }
+    public bool? IsHidden { get; set; }
 
     public virtual ICollection<Assign> Assigns { get; set; } = new List<Assign>();
 

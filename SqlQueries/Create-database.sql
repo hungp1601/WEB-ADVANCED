@@ -1,6 +1,7 @@
 -- Exported from QuickDBD: https://www.quickdatabasediagrams.com/
 -- Link to schema: https://app.quickdatabasediagrams.com/#/d/3uzGG6
--- NOTE! If you have used non-SQL datatypes in your design, you will have to change these here.
+
+drop database btl_web
 
 CREATE DATABASE btl_web;
 
@@ -11,29 +12,29 @@ SET XACT_ABORT ON
 BEGIN TRANSACTION QUICKDBD
 
 CREATE TABLE [course] (
-    [id] int  NOT NULL ,
-    [name] nvarchar  NOT NULL ,
-    [description] ntext  NOT NULL ,
+	[id] int IDENTITY(1,1) NOT NULL ,
+    [name] ntext  NOT NULL ,
+    [description] ntext ,
     [start_date] datetime  NOT NULL ,
-    [end_date] datetime  NOT NULL ,
-    [teacher_id] int  NOT NULL ,
-    [visible] bit  NOT NULL ,
+    [end_date] datetime NOT NULL ,
+    [teacher_id] int ,
+    [is_hidden] bit  DEFAULT 0,
     CONSTRAINT [PK_course] PRIMARY KEY CLUSTERED (
         [id] ASC
     )
 )
 
 CREATE TABLE [course_category] (
-    [id] int  NOT NULL ,
-    [name] nvarchar  NOT NULL ,
-    [description] ntext  NOT NULL ,
+    [id] int IDENTITY(1,1)  NOT NULL ,
+    [name] ntext  NOT NULL ,
+    [description] ntext ,
     CONSTRAINT [PK_course_category] PRIMARY KEY CLUSTERED (
         [id] ASC
     )
 )
 
 CREATE TABLE [course_has_categories] (
-    [id] int  NOT NULL ,
+    [id] int IDENTITY(1,1) NOT NULL ,
     [course_id] int  NOT NULL ,
     [categorie_id] int  NOT NULL ,
     CONSTRAINT [PK_course_has_categories] PRIMARY KEY CLUSTERED (
@@ -42,12 +43,12 @@ CREATE TABLE [course_has_categories] (
 )
 
 CREATE TABLE [user] (
-    [id] int  NOT NULL ,
-    [password] varchar  NOT NULL ,
-    [full_name] nvarchar  NOT NULL ,
-    [email] varchar  NOT NULL ,
-    [description] ntext  NOT NULL ,
-    [status] varchar  NOT NULL ,
+    [id] int IDENTITY(1,1) NOT NULL ,
+    [password] text  NOT NULL ,
+    [full_name] ntext  NOT NULL ,
+    [email] text  NOT NULL ,
+    [description] ntext,
+    [status] text  NOT NULL ,
     [role_id] int  NOT NULL ,
     CONSTRAINT [PK_user] PRIMARY KEY CLUSTERED (
         [id] ASC
@@ -55,31 +56,31 @@ CREATE TABLE [user] (
 )
 
 CREATE TABLE [role] (
-    [id] int  NOT NULL ,
+    [id] int IDENTITY(1,1) NOT NULL ,
     -- admin, teacher, student
-    [name] nvarchar  NOT NULL ,
-    [description] ntext  NOT NULL ,
+    [name] ntext  NOT NULL ,
+    [description] ntext ,
     CONSTRAINT [PK_role] PRIMARY KEY CLUSTERED (
         [id] ASC
     )
 )
 
 CREATE TABLE [user_has_course] (
-    [id] int  NOT NULL ,
+    [id] int IDENTITY(1,1) NOT NULL  ,
     [course_id] int  NOT NULL ,
     [user_id] int  NOT NULL ,
-    [status] bit  NOT NULL ,
+    [status] bit ,
     CONSTRAINT [PK_user_has_course] PRIMARY KEY CLUSTERED (
         [id] ASC
     )
 )
 
 CREATE TABLE [lesson] (
-    [id] int  NOT NULL ,
+    [id] int IDENTITY(1,1) NOT NULL  ,
     [course_id] int  NOT NULL ,
-    [name] nvarchar  NOT NULL ,
-    [description] ntext  NOT NULL ,
-    [visible] bit  NOT NULL ,
+    [name] ntext  NOT NULL ,
+    [description] ntext ,
+    [is_hidden] bit  DEFAULT 0 ,
     CONSTRAINT [PK_lesson] PRIMARY KEY CLUSTERED (
         [id] ASC
     )
@@ -87,15 +88,15 @@ CREATE TABLE [lesson] (
 
 -- table 11
 CREATE TABLE [assign] (
-    [id] int  NOT NULL ,
-    [name] varchar  NOT NULL ,
-    [description] ntext  NOT NULL ,
+    [id] int IDENTITY(1,1) NOT NULL ,
+    [name] ntext ,
+    [description] ntext ,
     [due_date] datetime  NOT NULL ,
-    [start_date] bit  NOT NULL ,
+    [start_date] datetime  NOT NULL ,
     [user_id] int  NOT NULL ,
     [lesson_id] int  NOT NULL ,
-    [visible] bit  NOT NULL ,
-    [url] varchar  NOT NULL ,
+    [is_hidden] bit DEFAULT 0 ,
+    [url] text ,
     CONSTRAINT [PK_assign] PRIMARY KEY CLUSTERED (
         [id] ASC
     )
@@ -103,12 +104,12 @@ CREATE TABLE [assign] (
 
 -- table 15
 CREATE TABLE [attendance] (
-    [id] int  NOT NULL ,
+    [id] int IDENTITY(1,1) NOT NULL  ,
     [lesson_id] int  NOT NULL ,
     [user_id] int  NOT NULL ,
-    [status] varchar  NOT NULL ,
+    [status] text ,
     [attendance_time] datetime  NOT NULL ,
-    [due_time] datetime  NOT NULL ,
+    [due_time] datetime NOT NULL ,
     CONSTRAINT [PK_attendance] PRIMARY KEY CLUSTERED (
         [id] ASC
     )
