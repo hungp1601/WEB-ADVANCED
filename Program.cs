@@ -1,7 +1,14 @@
+
+using btl_web.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<BtlWebContext> (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DATABASE_CONNECTION_STRING")));
+    
 
 var app = builder.Build();
 
