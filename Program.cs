@@ -1,3 +1,4 @@
+using btl_web.Data;
 using btl_web.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,5 +29,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Seed();
 
 app.Run();
