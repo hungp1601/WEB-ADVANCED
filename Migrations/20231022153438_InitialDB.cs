@@ -17,8 +17,8 @@ namespace btl_web.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "ntext", nullable: false),
-                    description = table.Column<string>(type: "ntext", nullable: true)
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,8 +31,8 @@ namespace btl_web.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "ntext", nullable: false),
-                    description = table.Column<string>(type: "ntext", nullable: true)
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -45,11 +45,11 @@ namespace btl_web.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    password = table.Column<string>(type: "text", nullable: false),
-                    full_name = table.Column<string>(type: "ntext", nullable: false),
-                    email = table.Column<string>(type: "text", nullable: false),
-                    description = table.Column<string>(type: "ntext", nullable: true),
-                    status = table.Column<string>(type: "text", nullable: false),
+                    password = table.Column<string>(type: "varchar(max)", nullable: false),
+                    full_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    email = table.Column<string>(type: "varchar(max)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    status = table.Column<string>(type: "varchar(max)", nullable: false),
                     role_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -68,8 +68,8 @@ namespace btl_web.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "ntext", nullable: false),
-                    description = table.Column<string>(type: "ntext", nullable: true),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     start_date = table.Column<DateTime>(type: "datetime", nullable: false),
                     end_date = table.Column<DateTime>(type: "datetime", nullable: false),
                     teacher_id = table.Column<int>(type: "int", nullable: true),
@@ -116,8 +116,8 @@ namespace btl_web.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     course_id = table.Column<int>(type: "int", nullable: false),
-                    name = table.Column<string>(type: "ntext", nullable: false),
-                    description = table.Column<string>(type: "ntext", nullable: true),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     is_hidden = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "((0))")
                 },
                 constraints: table =>
@@ -161,14 +161,14 @@ namespace btl_web.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "ntext", nullable: true),
-                    description = table.Column<string>(type: "ntext", nullable: true),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     due_date = table.Column<DateTime>(type: "datetime", nullable: false),
                     start_date = table.Column<DateTime>(type: "datetime", nullable: false),
                     user_id = table.Column<int>(type: "int", nullable: false),
                     lesson_id = table.Column<int>(type: "int", nullable: false),
                     is_hidden = table.Column<bool>(type: "bit", nullable: true, defaultValueSql: "((0))"),
-                    url = table.Column<string>(type: "text", nullable: true)
+                    url = table.Column<string>(type: "varchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -193,7 +193,7 @@ namespace btl_web.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     lesson_id = table.Column<int>(type: "int", nullable: false),
                     user_id = table.Column<int>(type: "int", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: true),
+                    status = table.Column<string>(type: "varchar(max)", nullable: true),
                     attendance_time = table.Column<DateTime>(type: "datetime", nullable: false),
                     due_time = table.Column<DateTime>(type: "datetime", nullable: false)
                 },

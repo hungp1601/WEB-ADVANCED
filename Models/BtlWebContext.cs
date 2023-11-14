@@ -46,7 +46,7 @@ public partial class BtlWebContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
-                .HasColumnType("ntext")
+                .HasColumnType("nvarchar(max)")
                 .HasColumnName("description");
             entity.Property(e => e.DueDate)
                 .HasColumnType("datetime")
@@ -56,13 +56,13 @@ public partial class BtlWebContext : DbContext
                 .HasColumnName("is_hidden");
             entity.Property(e => e.LessonId).HasColumnName("lesson_id");
             entity.Property(e => e.Name)
-                .HasColumnType("ntext")
+                .HasColumnType("nvarchar(max)")
                 .HasColumnName("name");
             entity.Property(e => e.StartDate)
                 .HasColumnType("datetime")
                 .HasColumnName("start_date");
             entity.Property(e => e.Url)
-                .HasColumnType("text")
+                .HasColumnType("varchar(max)")
                 .HasColumnName("url");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
@@ -90,7 +90,7 @@ public partial class BtlWebContext : DbContext
                 .HasColumnName("due_time");
             entity.Property(e => e.LessonId).HasColumnName("lesson_id");
             entity.Property(e => e.Status)
-                .HasColumnType("text")
+                .HasColumnType("varchar(max)")
                 .HasColumnName("status");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
@@ -111,7 +111,7 @@ public partial class BtlWebContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
-                .HasColumnType("ntext")
+                .HasColumnType("nvarchar(max)")
                 .HasColumnName("description");
             entity.Property(e => e.EndDate)
                 .HasColumnType("datetime")
@@ -120,7 +120,7 @@ public partial class BtlWebContext : DbContext
                 .HasDefaultValueSql("((0))")
                 .HasColumnName("is_hidden");
             entity.Property(e => e.Name)
-                .HasColumnType("ntext")
+                .HasColumnType("nvarchar(max)")
                 .HasColumnName("name");
             entity.Property(e => e.StartDate)
                 .HasColumnType("datetime")
@@ -138,10 +138,10 @@ public partial class BtlWebContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
-                .HasColumnType("ntext")
+                .HasColumnType("nvarchar(max)")
                 .HasColumnName("description");
             entity.Property(e => e.Name)
-                .HasColumnType("ntext")
+                .HasColumnType("nvarchar(max)")
                 .HasColumnName("name");
         });
 
@@ -171,13 +171,13 @@ public partial class BtlWebContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CourseId).HasColumnName("course_id");
             entity.Property(e => e.Description)
-                .HasColumnType("ntext")
+                .HasColumnType("nvarchar(max)")
                 .HasColumnName("description");
             entity.Property(e => e.IsHidden)
                 .HasDefaultValueSql("((0))")
                 .HasColumnName("is_hidden");
             entity.Property(e => e.Name)
-                .HasColumnType("ntext")
+                .HasColumnType("nvarchar(max)")
                 .HasColumnName("name");
 
             entity.HasOne(d => d.Course).WithMany(p => p.Lessons)
@@ -192,10 +192,10 @@ public partial class BtlWebContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
-                .HasColumnType("ntext")
+                .HasColumnType("nvarchar(max)")
                 .HasColumnName("description");
             entity.Property(e => e.Name)
-                .HasColumnType("ntext")
+                .HasColumnType("nvarchar(max)")
                 .HasColumnName("name");
         });
 
@@ -205,20 +205,20 @@ public partial class BtlWebContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
-                .HasColumnType("ntext")
+                .HasColumnType("nvarchar(max)")
                 .HasColumnName("description");
             entity.Property(e => e.Email)
-                .HasColumnType("text")
+                .HasColumnType("varchar(max)")
                 .HasColumnName("email");
             entity.Property(e => e.FullName)
-                .HasColumnType("ntext")
+                .HasColumnType("nvarchar(max)")
                 .HasColumnName("full_name");
             entity.Property(e => e.Password)
-                .HasColumnType("text")
+                .HasColumnType("varchar(max)")
                 .HasColumnName("password");
             entity.Property(e => e.RoleId).HasColumnName("role_id");
             entity.Property(e => e.Status)
-                .HasColumnType("text")
+                .HasColumnType("varchar(max)")
                 .HasColumnName("status");
 
             entity.HasOne(d => d.Role).WithMany(p => p.Users)

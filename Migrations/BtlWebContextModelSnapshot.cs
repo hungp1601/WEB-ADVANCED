@@ -32,7 +32,7 @@ namespace btl_web.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("ntext")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("description");
 
                     b.Property<DateTime>("DueDate")
@@ -50,7 +50,7 @@ namespace btl_web.Migrations
                         .HasColumnName("lesson_id");
 
                     b.Property<string>("Name")
-                        .HasColumnType("ntext")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
                     b.Property<DateTime>("StartDate")
@@ -58,7 +58,7 @@ namespace btl_web.Migrations
                         .HasColumnName("start_date");
 
                     b.Property<string>("Url")
-                        .HasColumnType("text")
+                        .HasColumnType("varchar(max)")
                         .HasColumnName("url");
 
                     b.Property<int>("UserId")
@@ -96,7 +96,7 @@ namespace btl_web.Migrations
                         .HasColumnName("lesson_id");
 
                     b.Property<string>("Status")
-                        .HasColumnType("text")
+                        .HasColumnType("varchar(max)")
                         .HasColumnName("status");
 
                     b.Property<int>("UserId")
@@ -122,7 +122,7 @@ namespace btl_web.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("ntext")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("description");
 
                     b.Property<DateTime>("EndDate")
@@ -137,7 +137,7 @@ namespace btl_web.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("ntext")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
                     b.Property<DateTime>("StartDate")
@@ -165,12 +165,12 @@ namespace btl_web.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("ntext")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("ntext")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
                     b.HasKey("Id");
@@ -218,7 +218,7 @@ namespace btl_web.Migrations
                         .HasColumnName("course_id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("ntext")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("description");
 
                     b.Property<bool?>("IsHidden")
@@ -229,7 +229,7 @@ namespace btl_web.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("ntext")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
                     b.HasKey("Id");
@@ -249,12 +249,12 @@ namespace btl_web.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("ntext")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("ntext")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
                     b.HasKey("Id");
@@ -272,22 +272,22 @@ namespace btl_web.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("ntext")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("description");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("varchar(max)")
                         .HasColumnName("email");
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("ntext")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("full_name");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("varchar(max)")
                         .HasColumnName("password");
 
                     b.Property<int>("RoleId")
@@ -296,7 +296,7 @@ namespace btl_web.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("varchar(max)")
                         .HasColumnName("status");
 
                     b.HasKey("Id");
