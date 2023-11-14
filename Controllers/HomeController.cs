@@ -1,4 +1,6 @@
-﻿using btl_web.Models;
+﻿using btl_web.Dtos;
+using btl_web.Models;
+using btl_web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +8,7 @@ namespace btl_web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly BtlWebContext btlWebContext;
-
-
-        public HomeController(ILogger<HomeController> logger, BtlWebContext btlWebContext)
-        {
-            _logger = logger;
-            this.btlWebContext = btlWebContext;
-        }
-
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
