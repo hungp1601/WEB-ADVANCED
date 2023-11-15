@@ -1,5 +1,9 @@
 using btl_web.Data;
 using btl_web.Models;
+using btl_web.Repositories;
+using btl_web.Repositories.Interfaces;
+using btl_web.Services;
+using btl_web.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<BtlWebContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DATABASE_CONNECTION_STRING")));
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 
 var app = builder.Build();
 
