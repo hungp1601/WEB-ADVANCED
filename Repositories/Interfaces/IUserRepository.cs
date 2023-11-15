@@ -9,7 +9,7 @@ namespace btl_web.Repositories.Interfaces
         User GetByEmailAndPassowrd(string email, string password);
         Boolean NotExistByEmail(string email);
         Boolean ExistByEmail(string email);
-        void Add(User user);
+        void AddAsync(User user);
         void Update(User user);
     }
 }

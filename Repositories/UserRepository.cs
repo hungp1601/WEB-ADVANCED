@@ -2,9 +2,7 @@ using System.Linq;
 using btl_web.Models;
 using Microsoft.EntityFrameworkCore;
 using btl_web.Constants.Statuses;
-//using btl_web.EF;
 using btl_web.Exceptions;
-using btl_web.Models;
 using BCryptNet = BCrypt.Net.BCrypt;
 using btl_web.Repositories.Interfaces;
 
@@ -14,7 +12,6 @@ namespace btl_web.Repositories
     {
         private readonly BtlWebContext _context;
 
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         public UserRepository(BtlWebContext context)
         {
             _context = context;
@@ -34,8 +31,8 @@ namespace btl_web.Repositories
 
         public User GetByEmailAndPassowrd(string Email, string password)
         {
-            User user = _context.Users
-                .SingleOrDefault(u => u.Email == Email);
+            User user = _context.Users.FirstOrDefault(u => u.Email.Equals(Email));
+
             if (user != null && BCryptNet.Verify(password, user.Password))
             {
                 return user;
@@ -44,7 +41,7 @@ namespace btl_web.Repositories
             return null;
         }
 
-        public void Add(User user)
+        public void AddAsync(User user)
         {
             if (user == null)
             {
@@ -79,7 +76,8 @@ namespace btl_web.Repositories
                 throw new DataRuntimeException(StatusWrongFormat.EMAIL_IS_EMPTY);
             }
 
-            User user = _context.Users.SingleOrDefault(u => u.Email == email);
+            User user = _context.Users.FirstOrDefault(user => user.Email.Equals(email));
+
             if (user == null)
             {
                 return false;
@@ -88,6 +86,4 @@ namespace btl_web.Repositories
             return true;
         }
     }
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-
 }

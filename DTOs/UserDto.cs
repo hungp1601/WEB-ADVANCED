@@ -6,14 +6,21 @@ namespace btl_web.Dtos
     public class UserDto
     {
         public int Id { get; set; }
-        public string Username { get; set; }
         public string Password { get; set; }
         public string RePassword { get; set; }
         public string Email { get; set; }
         public string FullName { get; set; }
         public string Description { get; set; }
 
-        public Role Role { get; set; }  
+        public Role Role { get; set; }
+
+        public UserDto(string password, string rePassword, string email, string fullName)
+        {
+            Password = password;
+            RePassword = rePassword;
+            Email = email;
+            FullName = fullName;
+        }
 
         public UserDto()
         {
