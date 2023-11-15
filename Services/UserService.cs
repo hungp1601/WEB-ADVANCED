@@ -6,7 +6,6 @@ using btl_web.Constants.Statuses;
 using btl_web.Dtos;
 using btl_web.Exceptions;
 using btl_web.Models;
-using btl_web.Repositories;
 using btl_web.Repositories.Interfaces;
 using btl_web.Services.Interfaces;
 using BCryptNet = BCrypt.Net.BCrypt;
@@ -16,14 +15,12 @@ namespace btl_web.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-      
-        public UserService(
-            IUserRepository userRepository
-           
-        )
+        private readonly IRoleRepository _roleRepository;
+
+        public UserService(IUserRepository userRepository, IRoleRepository roleRepository)
         {
-            _userRepository = userRepository;
-           
+           _userRepository = userRepository;
+           _roleRepository = roleRepository;
         }
 
         public UserDto GetUserById(int id)
@@ -67,27 +64,32 @@ namespace btl_web.Services
         public UserDto Register(UserDto dto)
         {
             ValidateRegister(dto);
+
             User user = new User
             {
-                Email = dto.Username,
+                Email = dto.Email,
                 Password = BCryptNet.HashPassword(dto.Password),
                 FullName = dto.FullName,
                 Description = dto.Description,
-
+                RoleId = getRoleByEmail(dto.Email).Id,
+                Status = "true",
             };
 
-            //_userRepository.Add(user);
-
-            //Role role = _roleRepository.GetByName(RoleConfig.USER);
-            //UserRole userRole = new UserRole
-            //{
-            //    User = user,
-            //    Role = role
-            //};
-
-            //_userRoleRepository.Add(userRole);
+            _userRepository.AddAsync(user);
 
             return new UserDto(user);
+        }
+
+        private Role getRoleByEmail(string email)
+        {
+            Role? role = null;
+
+            if (email.Contains("@students.hou.edu.vn"))
+                role = _roleRepository.GetByName(RoleConfig.STUDENT);
+            else if (email.Contains("@hou.edu.vn"))
+                role = _roleRepository.GetByName(RoleConfig.TEACHER);
+
+            return role;
         }
 
         private void ValidateRegister(UserDto dto)
@@ -95,11 +97,6 @@ namespace btl_web.Services
             if (dto == null || string.IsNullOrEmpty(dto.Email))
             {
                 throw new DataRuntimeException(StatusWrongFormat.USERNAME_IS_EMPTY);
-            }
-
-            if (_userRepository.ExistByEmail(dto.Email))
-            {
-                throw new DataRuntimeException(StatusExist.USERNAME_IS_EXSIT);
             }
 
             if (string.IsNullOrEmpty(dto.Email))
