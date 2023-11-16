@@ -13,8 +13,8 @@ BEGIN TRANSACTION QUICKDBD
 
 CREATE TABLE [course] (
 	[id] int IDENTITY(1,1) NOT NULL ,
-    [name] ntext  NOT NULL ,
-    [description] ntext ,
+    [name] nvarchar(max)  NOT NULL ,
+    [description] nvarchar(max) ,
     [start_date] datetime  NOT NULL ,
     [end_date] datetime NOT NULL ,
     [teacher_id] int ,
@@ -26,8 +26,8 @@ CREATE TABLE [course] (
 
 CREATE TABLE [course_category] (
     [id] int IDENTITY(1,1)  NOT NULL ,
-    [name] ntext  NOT NULL ,
-    [description] ntext ,
+    [name] nvarchar(max)  NOT NULL ,
+    [description] nvarchar(max) ,
     CONSTRAINT [PK_course_category] PRIMARY KEY CLUSTERED (
         [id] ASC
     )
@@ -44,11 +44,11 @@ CREATE TABLE [course_has_categories] (
 
 CREATE TABLE [user] (
     [id] int IDENTITY(1,1) NOT NULL ,
-    [password] text  NOT NULL ,
-    [full_name] ntext  NOT NULL ,
-    [email] text  NOT NULL ,
-    [description] ntext,
-    [status] text  NOT NULL ,
+    [password] varchar(max)  NOT NULL ,
+    [full_name] nvarchar(max)  NOT NULL ,
+    [email] varchar(max)  NOT NULL ,
+    [description] nvarchar(max),
+    [status] varchar(max)  NOT NULL ,
     [role_id] int  NOT NULL ,
     CONSTRAINT [PK_user] PRIMARY KEY CLUSTERED (
         [id] ASC
@@ -58,8 +58,8 @@ CREATE TABLE [user] (
 CREATE TABLE [role] (
     [id] int IDENTITY(1,1) NOT NULL ,
     -- admin, teacher, student
-    [name] ntext  NOT NULL ,
-    [description] ntext ,
+    [name] nvarchar(max)  NOT NULL ,
+    [description] nvarchar(max) ,
     CONSTRAINT [PK_role] PRIMARY KEY CLUSTERED (
         [id] ASC
     )
@@ -78,8 +78,8 @@ CREATE TABLE [user_has_course] (
 CREATE TABLE [lesson] (
     [id] int IDENTITY(1,1) NOT NULL  ,
     [course_id] int  NOT NULL ,
-    [name] ntext  NOT NULL ,
-    [description] ntext ,
+    [name] nvarchar(max)  NOT NULL ,
+    [description] nvarchar(max) ,
     [is_hidden] bit  DEFAULT 0 ,
     CONSTRAINT [PK_lesson] PRIMARY KEY CLUSTERED (
         [id] ASC
@@ -89,14 +89,14 @@ CREATE TABLE [lesson] (
 -- table 11
 CREATE TABLE [assign] (
     [id] int IDENTITY(1,1) NOT NULL ,
-    [name] ntext ,
-    [description] ntext ,
+    [name] nvarchar(max) ,
+    [description] nvarchar(max) ,
     [due_date] datetime  NOT NULL ,
     [start_date] datetime  NOT NULL ,
     [user_id] int  NOT NULL ,
     [lesson_id] int  NOT NULL ,
     [is_hidden] bit DEFAULT 0 ,
-    [url] text ,
+    [url] varchar(max) ,
     CONSTRAINT [PK_assign] PRIMARY KEY CLUSTERED (
         [id] ASC
     )
@@ -107,7 +107,7 @@ CREATE TABLE [attendance] (
     [id] int IDENTITY(1,1) NOT NULL  ,
     [lesson_id] int  NOT NULL ,
     [user_id] int  NOT NULL ,
-    [status] text ,
+    [status] varchar(max) ,
     [attendance_time] datetime  NOT NULL ,
     [due_time] datetime NOT NULL ,
     CONSTRAINT [PK_attendance] PRIMARY KEY CLUSTERED (

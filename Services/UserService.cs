@@ -8,6 +8,9 @@ using btl_web.Exceptions;
 using btl_web.Models;
 using btl_web.Repositories.Interfaces;
 using btl_web.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Newtonsoft.Json;
 using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace btl_web.Services
@@ -16,12 +19,18 @@ namespace btl_web.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
+        private readonly IHttpContextAccessor _context;
 
-        public UserService(IUserRepository userRepository, IRoleRepository roleRepository)
+        public UserService(IUserRepository userRepository, 
+            IRoleRepository roleRepository,
+            IHttpContextAccessor context)
         {
            _userRepository = userRepository;
            _roleRepository = roleRepository;
+           _context = context;
         }
+
+
 
         public UserDto GetUserById(int id)
         {
@@ -50,6 +59,25 @@ namespace btl_web.Services
             return new UserDto(user);
         }
 
+        public void saveUserToSession(UserDto user)
+        {
+            string userString = JsonConvert.SerializeObject(user);
+            _context.HttpContext.Session.SetString("user", userString);
+        }
+
+        public void removeUserFromSession()
+        {
+            _context.HttpContext.Session.Remove("user");
+        }
+
+        public UserDto getUserFromSession()
+        {
+            string userString = _context.HttpContext.Session.GetString("user");
+            if (string.IsNullOrEmpty(userString)) return null;
+
+            return JsonConvert.DeserializeObject<UserDto>(userString);
+        }
+
         public UserDto Login(string email, string password)
         {
             User user = _userRepository.GetByEmailAndPassowrd(email, password);
@@ -58,7 +86,15 @@ namespace btl_web.Services
                 throw new DataRuntimeException(StatusWrongFormat.USERNAME_OR_PASSWORD_WRONG_FROMAT);
             }
 
+            saveUserToSession(new UserDto(user));
+
+
             return new UserDto(user);
+        }
+
+        public void Logout()
+        {
+            removeUserFromSession();
         }
 
         public UserDto Register(UserDto dto)

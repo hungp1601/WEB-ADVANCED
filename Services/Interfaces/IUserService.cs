@@ -1,4 +1,6 @@
 ﻿using btl_web.Dtos;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace btl_web.Services.Interfaces
 {
@@ -8,5 +10,12 @@ namespace btl_web.Services.Interfaces
         UserDto GetUserById(int id);
         UserDto GetUserByEmail(string email);
         UserDto Register(UserDto dto);
+        public void saveUserToSession(UserDto user);
+
+        public void removeUserFromSession();
+
+
+        public UserDto getUserFromSession();
+        
     }
 }
