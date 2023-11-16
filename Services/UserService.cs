@@ -31,7 +31,6 @@ namespace btl_web.Services
         }
 
 
-
         public UserDto GetUserById(int id)
         {
             User user = _userRepository.GetById(id);
@@ -92,9 +91,10 @@ namespace btl_web.Services
             return new UserDto(user);
         }
 
-        public void Logout()
+        public bool Logout()
         {
             removeUserFromSession();
+            return true;
         }
 
         public UserDto Register(UserDto dto)

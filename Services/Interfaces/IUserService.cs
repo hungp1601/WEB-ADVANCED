@@ -10,10 +10,11 @@ namespace btl_web.Services.Interfaces
         UserDto GetUserById(int id);
         UserDto GetUserByEmail(string email);
         UserDto Register(UserDto dto);
+        bool Logout();
+
         public void saveUserToSession(UserDto user);
 
         public void removeUserFromSession();
-
 
         public UserDto getUserFromSession();
         

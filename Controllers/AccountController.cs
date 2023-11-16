@@ -28,6 +28,18 @@ namespace btl_web.Controllers
             return Ok(_userService.Login(email, password));
         }
 
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            return Ok(_userService.Logout());
+        }
+
+        //[HttpPost]
+        //public IActionResult Logout(IFormCollection formCollection)
+        //{
+        //    return Ok(_userService.Logout());
+        //}
+
         [HttpGet]
         public IActionResult Register()
         {
