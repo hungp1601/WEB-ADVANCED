@@ -1,4 +1,6 @@
 ﻿using btl_web.Dtos;
+using btl_web.Models;
+
 using btl_web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +18,10 @@ namespace btl_web.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+
+            UserDto user = _userService.getUserFromSession();
+
+            return View(new HomeViewModel { user = user });
         }
 
         [HttpPost]

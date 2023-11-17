@@ -4,6 +4,8 @@ using System.Linq;
 using btl_web.Services.Interfaces;
 using btl_web.Dtos;
 using Newtonsoft.Json;
+using btl_web.Models;
+using btl_web.Services;
 
 namespace btl_web.Middlewares
 {

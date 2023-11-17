@@ -72,9 +72,13 @@ namespace btl_web.Services
         public UserDto getUserFromSession()
         {
             string userString = _context.HttpContext.Session.GetString("user");
-            if (string.IsNullOrEmpty(userString)) return null;
+            UserDto user = new UserDto();
+            if (!string.IsNullOrEmpty(userString))
+            {
+                user = JsonConvert.DeserializeObject<UserDto>(userString);
+            }
 
-            return JsonConvert.DeserializeObject<UserDto>(userString);
+            return user;
         }
 
         public UserDto Login(string email, string password)
