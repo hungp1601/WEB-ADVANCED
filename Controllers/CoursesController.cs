@@ -9,87 +9,90 @@ using btl_web.Models;
 
 namespace btl_web.Controllers
 {
-    public class RolesController : Controller
+    public class CoursesController : Controller
     {
         private readonly BtlWebContext _context;
 
-        public RolesController(BtlWebContext context)
+        public CoursesController(BtlWebContext context)
         {
             _context = context;
         }
 
-        // GET: Roles
+        // GET: Courses
         public async Task<IActionResult> Index()
         {
-              return _context.Roles != null ? 
-                          View(await _context.Roles.ToListAsync()) :
-                          Problem("Entity set 'BtlWebContext.Roles'  is null.");
+            var btlWebContext = _context.Courses.Include(c => c.Teacher);
+            return View(await btlWebContext.ToListAsync());
         }
 
-        // GET: Roles/Details/5
+        // GET: Courses/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Roles == null)
+            if (id == null || _context.Courses == null)
             {
                 return NotFound();
             }
 
-            var role = await _context.Roles
+            var course = await _context.Courses
+                .Include(c => c.Teacher)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (role == null)
+            if (course == null)
             {
                 return NotFound();
             }
 
-            return View(role);
+            return View(course);
         }
 
-        // GET: Roles/Create
+        // GET: Courses/Create
         public IActionResult Create()
         {
+            ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // POST: Roles/Create
+        // POST: Courses/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Role role)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartDate,EndDate,TeacherId,IsHidden")] Course course)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(role);
+                _context.Add(course);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(role);
+            ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "Id", course.TeacherId);
+            return View(course);
         }
 
-        // GET: Roles/Edit/5
+        // GET: Courses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Roles == null)
+            if (id == null || _context.Courses == null)
             {
                 return NotFound();
             }
 
-            var role = await _context.Roles.FindAsync(id);
-            if (role == null)
+            var course = await _context.Courses.FindAsync(id);
+            if (course == null)
             {
                 return NotFound();
             }
-            return View(role);
+            ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "Id", course.TeacherId);
+            return View(course);
         }
 
-        // POST: Roles/Edit/5
+        // POST: Courses/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Role role)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartDate,EndDate,TeacherId,IsHidden")] Course course)
         {
-            if (id != role.Id)
+            if (id != course.Id)
             {
                 return NotFound();
             }
@@ -98,12 +101,12 @@ namespace btl_web.Controllers
             {
                 try
                 {
-                    _context.Update(role);
+                    _context.Update(course);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RoleExists(role.Id))
+                    if (!CourseExists(course.Id))
                     {
                         return NotFound();
                     }
@@ -114,49 +117,51 @@ namespace btl_web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(role);
+            ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "Id", course.TeacherId);
+            return View(course);
         }
 
-        // GET: Roles/Delete/5
+        // GET: Courses/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Roles == null)
+            if (id == null || _context.Courses == null)
             {
                 return NotFound();
             }
 
-            var role = await _context.Roles
+            var course = await _context.Courses
+                .Include(c => c.Teacher)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (role == null)
+            if (course == null)
             {
                 return NotFound();
             }
 
-            return View(role);
+            return View(course);
         }
 
-        // POST: Roles/Delete/5
+        // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Roles == null)
+            if (_context.Courses == null)
             {
-                return Problem("Entity set 'BtlWebContext.Roles'  is null.");
+                return Problem("Entity set 'BtlWebContext.Courses'  is null.");
             }
-            var role = await _context.Roles.FindAsync(id);
-            if (role != null)
+            var course = await _context.Courses.FindAsync(id);
+            if (course != null)
             {
-                _context.Roles.Remove(role);
+                _context.Courses.Remove(course);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RoleExists(int id)
+        private bool CourseExists(int id)
         {
-          return (_context.Roles?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Courses?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
